@@ -11,18 +11,20 @@ from itsdangerous import (
 SECRET_KEY = 'ncXZyx5cLR7x1$B^Ybtqp1f!E#dG4H3EN@ioYYKoxx'
 
 class User:
-    def __init__(self, id, username, password):
+    def __init__(self, id, username, password, email, phone, adress):
         self.id = id
         self.username = username
         self.password = password
+        self.phone = phone
+        self.adress = adress
 
 
     def create(self):
         with DB() as db:
-            values = (self.username, self.password)
+            values = (self.username, self.password, self.email, self.phone, self.adress)
             db.execute('''
-                INSERT INTO users (username, password)
-                VALUES (?, ?)''', values)
+                INSERT INTO users (username, password, email, phone, adress)
+                VALUES (?, ?, ?, ?, ?)''', values)
             return self
 
 
