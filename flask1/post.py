@@ -2,64 +2,69 @@ from database import DB
 from comment import Comment
 
 
-class Post:
-    def __init__(self, id, name, author, content, category):
+class Ad:
+    def __init__(self, id, title, description, price, date, is_active, buyer):
         self.id = id
-        self.name = name
-        self.author = author
-        self.content = content
-        self.category = category
+        self.title = title
+        self.description = description
+        self.price = price
+        self.date = date
+        self.is_active = is_active
+        self.buyer = buyer
+	
 
     @staticmethod
     def all():
         with DB() as db:
-            rows = db.execute('SELECT * FROM posts').fetchall()
-            return [Post(*row) for row in rows]
+            rows = db.execute('SELECT * FROM ads').fetchall()
+            return [Ad(*row) for row in rows]
 
     @staticmethod
     def find(id):
         with DB() as db:
             row = db.execute(
-                'SELECT * FROM posts WHERE id = ?',
+                'SELECT * FROM ads WHERE id = ?',
                 (id,)
             ).fetchone()
-            return Post(*row)
+            return Ad(*row)
 
     @staticmethod
     def find_by_category(category):
         with DB() as db:
             rows = db.execute(
-                'SELECT * FROM posts WHERE category_id = ?',
+                'SELECT * FROM ads WHERE category_id = ?',
                 (category.id,)
             ).fetchall()
-            return [Post(*row) for row in rows]
+            return [Ad(*row) for row in rows]
 
     def create(self):
         with DB() as db:
-            values = (self.name, self.author, self.content, self.category.id)
+            values = (self.title, self.description, self.price, self.date, self.is_active, self.buyer)
             db.execute('''
-                INSERT INTO posts (name, author, content, category_id)
-                VALUES (?, ?, ?, ?)''', values)
+                INSERT INTO ads (title, description, price, date, is_active, buyer)
+                VALUES (?, ?, ?, ?, ?, ?)''', values)
             return self
 
     def save(self):
         with DB() as db:
             values = (
-                self.name,
-                self.author,
-                self.content,
-                self.category.id,
+                self.title, 
+				self.description, 
+				self.price, 
+				self.date, 
+				self.is_active, 
+				self.buyer,
                 self.id
             )
             db.execute(
-                '''UPDATE posts
-                SET name = ?, author = ?, content = ?, category_id = ?
+                '''UPDATE ads
+                SET title = ?, description = ?, price = ?, date = ?, is_active = ?, buyer = ?
                 WHERE id = ?''', values)
             return self
 
     def delete(self):
         with DB() as db:
-            db.execute('DELETE FROM posts WHERE id = ?', (self.id,))
+            db.execute('DELETE FROM ads WHERE id = ?', (self.id,))
 
     def comments(self):
-        return Comment.find_by_post(self)
+        return Comment.find_by_ad(self)

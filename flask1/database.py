@@ -12,23 +12,25 @@ CREATE TABLE IF NOT EXISTS categories
     )
 ''')
 conn.cursor().execute('''
-CREATE TABLE IF NOT EXISTS posts
+CREATE TABLE IF NOT EXISTS ads
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        author TEXT,
-        content TEXT,
-        category_id INTEGER,
-        FOREIGN KEY(category_id) REFERENCES categories(id)
+        title TEXT,
+        description TEXT,
+        price INTEGER,
+		date TEXT,
+        is_active BOOL,
+        buyer TEXT,
+		FOREIGN KEY(category_id) REFERENCES categories(id)
     )
 ''')
 conn.cursor().execute('''
 CREATE TABLE IF NOT EXISTS comments
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        post_id INTEGER,
+        ad_id INTEGER,
         message TEXT,
-        FOREIGN KEY(post_id) REFERENCES posts(id)
+        FOREIGN KEY(ad_id) REFERENCES ads(id)
     )
 ''')
 conn.cursor().execute('''
@@ -36,7 +38,10 @@ CREATE TABLE IF NOT EXISTS users
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+		email TEXT UNIQUE NOT NULL,
+		phone TEXT UNIQUE NOT NULL,
+		adress TEXT NOT NULL
     )
 ''')
 conn.commit()

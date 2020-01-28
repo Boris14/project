@@ -17,10 +17,10 @@ class Comment:
             return self
 
     @staticmethod
-    def find_by_post(post):
+    def find_by_ad(ad):
         with DB() as db:
             rows = db.execute(
-                'SELECT * FROM comments WHERE post_id = ?',
-                (post.id,)
+                'SELECT * FROM comments WHERE ad_id = ?',
+                (ad.id,)
             ).fetchall()
             return [Comment(*row) for row in rows]

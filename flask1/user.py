@@ -40,6 +40,22 @@ class User:
             if row:
                 return User(*row)
 
+    @staticmethod
+    def find_by_id(id):
+        if not id:
+            return None
+        with DB() as db:
+            row = db.execute(
+                'SELECT * FROM users WHERE id = ?',
+                (id,)
+            ).fetchone()
+            if row:
+                return User(*row)
+
+    def delete(self):
+        with DB() as db:
+            db.execute('DELETE FROM users WHERE id = ?', (self.id,))
+
 
     @staticmethod
     def hash_password(password):

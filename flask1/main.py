@@ -127,7 +127,10 @@ def register():
         values = (
             None,
             request.form['username'],
-            User.hash_password(request.form['password'])
+            User.hash_password(request.form['password']),
+			request.form['email'],
+			request.form['phone'],
+			request.form['adress']
         )
         User(*values).create()
 
