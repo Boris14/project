@@ -1,0 +1,12 @@
+<title>Ads</title>
+
+<a href="/ads/new">New ad</a> <br/>
+<a href="/register">Register</a>
+
+<h1>Shop</h1>
+<a href="/ads/0">No ads</a><br/>
+{% for ad in ads %}
+<a href="/ads/{{ ad.id }}">{{ ad.title }}</a>
+<br/>
+{% endfor %}
+

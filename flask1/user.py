@@ -15,6 +15,7 @@ class User:
         self.id = id
         self.username = username
         self.password = password
+        self.email = email
         self.phone = phone
         self.adress = adress
 

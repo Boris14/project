@@ -20,17 +20,7 @@ CREATE TABLE IF NOT EXISTS ads
         price INTEGER,
 		date TEXT,
         is_active BOOL,
-        buyer TEXT,
-		FOREIGN KEY(category_id) REFERENCES categories(id)
-    )
-''')
-conn.cursor().execute('''
-CREATE TABLE IF NOT EXISTS comments
-    (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        ad_id INTEGER,
-        message TEXT,
-        FOREIGN KEY(ad_id) REFERENCES ads(id)
+        buyer TEXT
     )
 ''')
 conn.cursor().execute('''

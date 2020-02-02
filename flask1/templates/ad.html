@@ -1,0 +1,20 @@
+<title>Ad</title>
+<a href="/">Home</a>
+
+<h1>{{ ad.title }}</h1>
+<h2>{{ ad.price }}</h2>
+
+<hr>
+<p>
+{{ ad.description }}
+</p>
+
+<form action="/ads/{{ ad.id }}/buy" method="ad">
+  <button type="submit">Buy ad</button>
+</form>
+
+<form action="/ads/{{ ad.id }}/delete" method="ad">
+  <button type="submit">Delete ad</button>
+</form>
+<br/>
+
